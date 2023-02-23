@@ -3,6 +3,7 @@
 > :warning: Please read [Expectations within this Organization](https://github.com/hztools/.github/tree/main/profile#expectations-within-this-organization) before using it.
 
 [![Go Reference](https://pkg.go.dev/badge/hz.tools/tap.svg)](https://pkg.go.dev/hz.tools/tap)
+[![Go Report Card](https://goreportcard.com/badge/hz.tools/tap)](https://goreportcard.com/report/hz.tools/tap)
 
 ## Linux
 
