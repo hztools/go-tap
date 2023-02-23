@@ -139,10 +139,20 @@ func (i Interface) SetHardwareAddr(addr net.HardwareAddr) error {
 	}
 
 	// Doubly annoying is a RawSockaddr is a []int8 (wat) not a []uint8,
-	// so let's cast this away since this is a bug in Go, and the kernel
+	// so let's cast this away since this is... wrong, and the kernel
 	// will understand this memory as a []byte, not as a []int. This makes
 	// debugging and interface code a lot harder, but it's possible
 	// if we escape the typesystem.
+	//
+	// This happens (I think) because the OpenBSD struct is a [14]char,
+	// which is a [14]int8.
+	//
+	// struct sockaddr {
+	// 	u_int8_t	sa_len;
+	// 	sa_family_t	sa_family;
+	// 	char		sa_data[14];
+	// };
+	//
 	buf := (*[14]byte)(unsafe.Pointer(&(req.Addr.Data[0])))
 	copy(buf[:6], addr)
 
