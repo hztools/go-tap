@@ -49,6 +49,12 @@ type tuninfo struct {
 	Baud  uint32
 }
 
+var (
+	// ErrNoUsableDevs will be returned if the hz.tools/tap library can't open
+	// any of the system TAP files. This error can only happen on OpenBSD.
+	ErrNoUsableDevs = fmt.Errorf("tap: all tap devices could not be opened")
+)
+
 // requestInterface will attempt to open the /dev/tap* interfaces until
 // we have success or run out of files :)
 func requestInterface(opts Options) ([syscall.IFNAMSIZ]byte, *os.File, platformState, error) {
@@ -66,7 +72,7 @@ func requestInterface(opts Options) ([syscall.IFNAMSIZ]byte, *os.File, platformS
 		fd, err = os.OpenFile(fmt.Sprintf("/dev/tap%d", i), os.O_RDWR, 0)
 		if err != nil {
 			if os.IsNotExist(err) {
-				return name, nil, platformState{}, fmt.Errorf("tap: all tap devices could not be opened")
+				return name, nil, platformState{}, ErrNoUsableDevs
 			}
 			// otherwise something went wrong, let's skip it and move on.
 			i++
