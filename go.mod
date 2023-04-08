@@ -8,7 +8,4 @@ require (
 	golang.org/x/sys v0.7.0
 )
 
-require (
-	github.com/vishvananda/netns v0.0.4 // indirect
-	golang.org/x/net v0.4.0 // indirect
-)
+require github.com/vishvananda/netns v0.0.4 // indirect
