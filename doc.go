@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE. }}}
 
+// Package tap contains bindings to create TAP/TUN interfaces on Linux and
+// OpenBSD.
 package tap
 
 // vim: foldmethod=marker

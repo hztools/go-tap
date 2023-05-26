@@ -29,6 +29,7 @@ import (
 	"golang.org/x/sys/unix"
 )
 
+// Interface is a handle to a created TAP/TUN interface.
 type Interface struct {
 	name   [syscall.IFNAMSIZ]byte
 	fd     *os.File
@@ -37,15 +38,20 @@ type Interface struct {
 	ps     platformState
 }
 
+// Name will return the UNIX interface name for the TAP/TUN interface.
 func (i Interface) Name() string {
 	return unix.ByteSliceToString(i.name[:])
 }
 
+// Close will release all resources held by this Interface.
 func (i Interface) Close() error {
 	i.cancel()
 	return nil
 }
 
+// Options contains a number of configuration params for the creation of
+// the TAP/TUN interface. The PlatformOptions struct is OS dependent, and
+// may contain options on your OS that are not present on other OSs.
 type Options struct {
 	PlatformOptions PlatformOptions
 }
